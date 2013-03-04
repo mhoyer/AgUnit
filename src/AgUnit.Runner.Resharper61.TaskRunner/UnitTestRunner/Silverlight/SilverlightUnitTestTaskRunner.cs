@@ -88,6 +88,7 @@ namespace AgUnit.Runner.Resharper61.TaskRunner.UnitTestRunner.Silverlight
             return new InputOptions()
                 .SetXapPaths(silverlightTask.GetXapPaths())
                 .SetDllPaths(silverlightTask.GetDllPaths())
+                .SetWindowGeometry(new WindowGeometry { State = BrowserWindowState.Normal })
                 .SetMethodsToTest(testMethods.Select(m => m.GetFullMethodName()).ToList());
         }
 
