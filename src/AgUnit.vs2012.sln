@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgUnit.Runner.Resharper80",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgUnit.Runner.Resharper80.TaskRunner", "AgUnit.Runner.Resharper80.TaskRunner\AgUnit.Runner.Resharper80.TaskRunner.csproj", "{46FB54A8-AA3A-4F4D-96ED-DB772E32CA60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgUnit.Runner.Resharper80.OptionsDialog", "AgUnit.Runner.Resharper80.OptionsDialog\AgUnit.Runner.Resharper80.OptionsDialog.csproj", "{09446157-4F01-4AE3-A221-D80E718E436B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,12 @@ Global
 		{46FB54A8-AA3A-4F4D-96ED-DB772E32CA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46FB54A8-AA3A-4F4D-96ED-DB772E32CA60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46FB54A8-AA3A-4F4D-96ED-DB772E32CA60}.Release|x86.ActiveCfg = Release|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09446157-4F01-4AE3-A221-D80E718E436B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
