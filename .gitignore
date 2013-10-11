@@ -8,3 +8,4 @@ resharper.log
 TestResults/
 ClientBin/*
 install/*.nupkg
+packages/
