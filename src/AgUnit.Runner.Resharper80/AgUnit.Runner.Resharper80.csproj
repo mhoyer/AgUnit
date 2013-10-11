@@ -153,6 +153,7 @@
     <Compile Include="..\AgUnit.Runner.Resharper61\Properties\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="AgUnitSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\AgUnit.Runner.Resharper61\UnitTestFramework\ExtendedDebugHostProvider.cs">
       <Link>UnitTestFramework\ExtendedDebugHostProvider.cs</Link>
