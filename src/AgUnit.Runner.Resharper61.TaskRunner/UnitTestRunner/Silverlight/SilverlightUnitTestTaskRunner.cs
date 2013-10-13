@@ -102,10 +102,16 @@ namespace AgUnit.Runner.Resharper61.TaskRunner.UnitTestRunner.Silverlight
 
         private static InputOptions CreateStatLightInputOptions(SilverlightTask silverlightTask, MethodTask[] testMethods)
         {
-            return new InputOptions()
+            var inputOptions = new InputOptions()
                 .SetXapPaths(silverlightTask.GetXapPaths())
-                .SetDllPaths(silverlightTask.GetDllPaths())
-                .SetMethodsToTest(testMethods.Select(m => m.GetFullMethodName()).ToList());
+                .SetDllPaths(silverlightTask.GetDllPaths());
+
+            if (silverlightTask.GetSettings().IsBrowserWindowEnabled)
+            {
+                inputOptions.SetWindowGeometry(new WindowGeometry { State = BrowserWindowState.Normal });
+            }
+
+            return inputOptions.SetMethodsToTest(testMethods.Select(m => m.GetFullMethodName()).ToList());
         }
 
         private static void SetUpSilverlightResultsHandler(TinyIoCContainer ioc, IEnumerable<ClassTask> testClasses, IEnumerable<MethodTask> testMethods)
