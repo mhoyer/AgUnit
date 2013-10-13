@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using AgUnit.Runner.Resharper80;
 using JetBrains.ReSharper.TaskRunnerFramework;
 
 namespace AgUnit.Runner.Resharper61.UnitTestFramework.Silverlight
@@ -10,10 +11,12 @@ namespace AgUnit.Runner.Resharper61.UnitTestFramework.Silverlight
         private const string SilverlightPlatformVersionKey = "SilverlightPlatformVersion";
         private const string XapPathKey = "XapPath";
         private const string DllPathKey = "DllPath";
+        private const string IsBrowserWindowEnabledKey = "IsBrowserWindowEnabled";
 
         public Version SilverlightPlatformVersion { get; private set; }
         public string XapPath { get; private set; }
         public string DllPath { get; private set; }
+        public AgUnitSettings Settings { get; set; }
 
         public override bool IsMeaningfulTask
         {
@@ -27,14 +30,20 @@ namespace AgUnit.Runner.Resharper61.UnitTestFramework.Silverlight
             SilverlightPlatformVersion = !string.IsNullOrEmpty(silverlightPlatformVersion) ? new Version(silverlightPlatformVersion) : null;
             XapPath = GetXmlAttribute(element, XapPathKey);
             DllPath = GetXmlAttribute(element, DllPathKey);
+            
+            Settings = new AgUnitSettings
+            {
+                IsBrowserWindowEnabled = GetXmlAttribute(element, IsBrowserWindowEnabledKey) != null
+            };
         }
 
-        public SilverlightUnitTestTask(Version silverlightPlatformVersion, string xapPath, string dllPath)
+        public SilverlightUnitTestTask(Version silverlightPlatformVersion, string xapPath, string dllPath, AgUnitSettings settings = null)
             : base(SilverlightUnitTestProvider.RunnerId)
         {
             SilverlightPlatformVersion = silverlightPlatformVersion;
             XapPath = xapPath;
             DllPath = dllPath;
+            Settings = settings;
         }
 
         public override void SaveXml(XmlElement element)
@@ -43,6 +52,10 @@ namespace AgUnit.Runner.Resharper61.UnitTestFramework.Silverlight
             SetXmlAttribute(element, SilverlightPlatformVersionKey, (SilverlightPlatformVersion ?? (object)string.Empty).ToString());
             SetXmlAttribute(element, XapPathKey, XapPath);
             SetXmlAttribute(element, DllPathKey, DllPath);
+            if (Settings.IsBrowserWindowEnabled)
+            {
+                SetXmlAttribute(element, IsBrowserWindowEnabledKey, "true");
+            }
         }
 
         #region Equals
