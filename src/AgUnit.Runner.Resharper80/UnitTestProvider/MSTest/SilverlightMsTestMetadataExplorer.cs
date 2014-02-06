@@ -7,6 +7,7 @@ using System.Threading;
 using System.Linq;
 using AgUnit.Runner.Resharper80.UnitTestFramework.Silverlight;
 using JetBrains.Application.Settings;
+using JetBrains.UI.Application;
 using util::JetBrains.DataFlow;
 using JetBrains.Metadata.Reader.API;
 using JetBrains.ProjectModel;
@@ -27,6 +28,8 @@ namespace AgUnit.Runner.Resharper80.UnitTestProvider.MSTest
         private readonly ISolution solution;
         private readonly IUnitTestElementManager unitTestElementManager;
         private readonly mstestlegacy::JetBrains.ReSharper.UnitTestProvider.MSTest.IMsTestElementFactory elementFactory;
+        private readonly IMainWindow _mainWindow;
+        private readonly IApplicationDescriptor _appDesciptor;
 
         public IUnitTestProvider Provider { get; private set; }
 
@@ -37,13 +40,14 @@ namespace AgUnit.Runner.Resharper80.UnitTestProvider.MSTest
         }
 
         private mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestElementFactory msTestElementFactory;
+
         private mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestElementFactory MsTestElementFactory
         {
             get { return msTestElementFactory ?? (msTestElementFactory = CreateMsTestElementFactory()); }
         }
 
         public SilverlightMsTestMetadataExplorer(IShellLocks shellLocks, ISettingsStore settingsStore, SilverlightUnitTestProvider provider, Lifetime lifetime, ISolution solution,
-            IUnitTestElementManager unitTestElementManager, mstestlegacy::JetBrains.ReSharper.UnitTestProvider.MSTest.IMsTestElementFactory elementFactory)
+            IUnitTestElementManager unitTestElementManager, mstestlegacy::JetBrains.ReSharper.UnitTestProvider.MSTest.IMsTestElementFactory elementFactory, IMainWindow mainWindow, IApplicationDescriptor appDesciptor)
         {
             Provider = provider;
             this.shellLocks = shellLocks;
@@ -52,14 +56,16 @@ namespace AgUnit.Runner.Resharper80.UnitTestProvider.MSTest
             this.solution = solution;
             this.unitTestElementManager = unitTestElementManager;
             this.elementFactory = elementFactory;
+            _mainWindow = mainWindow;
+            _appDesciptor = appDesciptor;
         }
 
         private mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestElementFactory CreateMsTestElementFactory()
         {
-            var msTestProvider = new mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestProvider(settingsStore, MsTestAttributesProvider);
+            var msTestProvider = new mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestProvider(shellLocks, settingsStore, MsTestAttributesProvider, _mainWindow, _appDesciptor);
             var msTestServices = new mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestServices(lifetime, solution, msTestProvider, settingsStore);
 
-            return new mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestElementFactory(lifetime, msTestServices, unitTestElementManager, settingsStore, solution);
+            return new mstest10::JetBrains.ReSharper.UnitTestProvider.MSTest10.MsTestElementFactory(msTestServices, unitTestElementManager);
         }
 
         public void ExploreAssembly(IProject project, IMetadataAssembly assembly, UnitTestElementConsumer consumer, ManualResetEvent exitEvent)
